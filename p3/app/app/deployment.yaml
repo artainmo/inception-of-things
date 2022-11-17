@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: will
-        image: wil42/playground:v2
+        image: wil42/playground:v1
         ports:
         - containerPort: 8888
 #        livenessProbe:              #Prevent the app from dying by restarting it if it dies. This is not explicitly demanded in project description but I do it to prevent failures.
