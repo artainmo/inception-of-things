@@ -34,7 +34,7 @@ kubectl port-forward svc/argocd-server -n argocd 8080:443 &>/dev/null & #We run 
 ARGOCD_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo)
 argocd login localhost:8080 --username admin --password $ARGOCD_PASSWORD --insecure --grpc-web
 kubectl config set-context --current --namespace=argocd
-argocd app create will --repo 'https://github.com/Aglorios17/Inception_Of_Things_19.git' --path 'p3/app/app' --dest-namespace 'dev' --dest-server 'https://kubernetes.default.svc' --grpc-web
+argocd app create will --repo 'https://github.com/artainmo/inception-of-things.git' --path 'p3/app/app' --dest-namespace 'dev' --dest-server 'https://kubernetes.default.svc' --grpc-web
 if [ $? -eq 20 ] #protect this script from running while will app already exists
 then
   echo "An error occurred when creating argo-cd app 'will'."

@@ -55,7 +55,7 @@ kubectl describe deployments will-app-deployment | grep 'Image'
 echo "> curl http://localhost:8888"
 curl http://localhost:8888
 echo "\n\033[0;36mNow we will change the git repository Argo-CD is connected to so that the image uses version $newImageVersion instead of $imageVersion\033[0m"
-git clone 'https://github.com/Aglorios17/Inception_Of_Things_19.git' tmp &>/dev/null
+git clone 'https://github.com/artainmo/inception-of-things.git' tmp &>/dev/null
 cd tmp/p3
 git push --dry-run &>/dev/null #verify you have the permissions to make changes to this repo
 if [ $? -eq 128 ]
@@ -96,7 +96,7 @@ echo "\033[1;33mAfter changing deployment.yaml\033[0m"
 echo "> cat app/app/deployment.yaml | grep 'image'"
 cat app/app/deployment.yaml | grep 'image'
 git add app/app/deployment.yaml &>/dev/null
-git commit -m "App change image version for synchronization TEST" &>/dev/null
+git commit -m "App change image version for p3 synchronization TEST" &>/dev/null
 git push &>/dev/null
 cd - 1>/dev/null
 rm -rf tmp
