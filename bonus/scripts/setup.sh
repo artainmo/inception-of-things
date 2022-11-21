@@ -3,11 +3,13 @@ echo "\033[0;32m======== Install prerequisites ========\033[0m"
 #install docker if docker does not exist or is outdated
 brew outdated --cask docker || brew install --cask docker
 #install kubernetes and its CLI
-brew outdated kubectl || brew kubectl
+brew outdated kubernetes-cli || brew install kubernetes-cli
 #install k3d
 brew outdated k3d || brew install k3d
 #install argo-cd's CLI
 brew outdated argocd || brew install argocd
+#install helm for GitLab Runner on kubernetes
+brew outdated helm || brew install helm
 
 echo "\033[0;32m======== K3D setup - Create kubernetes cluster on local machine ========\033[0m"
 k3d cluster create p3
@@ -31,6 +33,7 @@ kubectl cluster-info
 echo "\033[0;32m======== Kubernetes namespaces setup ========\033[0m"
 kubectl create namespace argocd
 kubectl create namespace dev
+kubectl create namespace gitlab
 kubectl get namespace
 
 echo "\033[0;32m======== Argo CD setup - Allow the creation of a CI/CD pipeline around kubernetes application ========\033[0m"

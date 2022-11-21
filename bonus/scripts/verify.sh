@@ -56,7 +56,7 @@ echo "> curl http://localhost:8888"
 curl http://localhost:8888
 echo "\n\033[0;36mNow we will change the git repository Argo-CD is connected to so that the image uses version $newImageVersion instead of $imageVersion\033[0m"
 git clone 'https://gitlab.com/artainmo/inception-of-things.git' tmp &>/dev/null
-cd tmp/bonus
+cd tmp
 git push --dry-run &>/dev/null #verify you have the permissions to make changes to this repo
 if [ $? -eq 128 ]
 then
@@ -64,7 +64,7 @@ then
   cd -; rm -rf tmp;
   exit 1
 fi
-realImageVersion=$(cat app/app/deployment.yaml | grep 'image')
+realImageVersion=$(cat app/deployment.yaml | grep 'image')
 realImageVersion=$(echo $realImageVersion | cut -c 26-26)
 if [ $imageVersion != $realImageVersion ]; then
   osascript -e 'display notification "Verification not possible" with title "App Error"'; say "App Error"
@@ -74,7 +74,8 @@ if [ $imageVersion != $realImageVersion ]; then
     cd -; rm -rf tmp
   	exit 0
   fi
-  echo "Waiting... (This can take up to 6minutes)"
+  argocd app sync will --grpc-web
+  echo "Waiting... (This can take up to 1minute)"
   SECONDS=0 #Calculate time of sync (https://stackoverflow.com/questions/8903239/how-to-calculate-time-elapsed-in-bash-script)
   kubectl wait deployment will-app-deployment --for=jsonpath="{.spec.template.spec.containers[*].image}"="wil42/playground:v$realImageVersion" --timeout=600s
   if [ $? -eq 1 ]
@@ -89,18 +90,29 @@ if [ $imageVersion != $realImageVersion ]; then
   imageVersion=$realImageVersion
 fi
 echo "\033[1;33mBefore changing deployment.yaml\033[0m"
-echo "> cat app/app/deployment.yaml | grep 'image'"
-cat app/app/deployment.yaml | grep 'image'
-sed -i '' "s/wil42\/playground\:v$imageVersion/wil42\/playground\:v$newImageVersion/g" app/app/deployment.yaml
+echo "> cat app/deployment.yaml | grep 'image'"
+cat app/deployment.yaml | grep 'image'
+sed -i '' "s/wil42\/playground\:v$imageVersion/wil42\/playground\:v$newImageVersion/g" app/deployment.yaml
 echo "\033[1;33mAfter changing deployment.yaml\033[0m"
-echo "> cat app/app/deployment.yaml | grep 'image'"
-cat app/app/deployment.yaml | grep 'image'
-git add app/app/deployment.yaml &>/dev/null
-git commit -m "App change image version for p3 synchronization TEST" &>/dev/null
+echo "> cat app/deployment.yaml | grep 'image'"
+cat app/deployment.yaml | grep 'image'
+git add app/deployment.yaml &>/dev/null
+git commit -m "App change image version for bonus synchronization TEST" &>/dev/null
 git push &>/dev/null
 cd - 1>/dev/null
 rm -rf tmp
-echo "\033[0;36mWAIT until automated synchronization occurs (this can take up to 6minutes)\033[0m\nAvoid manual synchronization as it can lead to bugs during this demonstration."
+echo "\033[0;36mHere you can see in 'Sync Policy' that the app doesn't automatically synchronizes using Argo-CD. For this bonus we will pass through gitlab CI/CD pipeline instead.\033[0m"
+argocd app get will --grpc-web | grep -e 'Sync Policy\|Name:'
+read -p 'Do you want to see the CI/CD pipeline executing on gitlab? (y/n): ' input
+if [ $input = 'y' ]; then
+  for i in {5..0}; do
+      printf ' We will redirect you to https://gitlab.com/artainmo/inception-of-things/-/pipelines in: \033[0;31m%d\033[0m \r' $i #An empty space must sit before \r else prior longer string end will be displayed
+  		sleep 1
+	done
+	printf '\n'
+	open 'https://gitlab.com/artainmo/inception-of-things/-/pipelines'
+fi
+echo "\033[0;36mWAIT until automated synchronization occurs (this can take up to 3minutes)\033[0m\nAvoid manual synchronization as it can lead to bugs during this demonstration."
 SECONDS=0 #Calculate time of sync (https://stackoverflow.com/questions/8903239/how-to-calculate-time-elapsed-in-bash-script)
 kubectl wait deployment will-app-deployment --for=jsonpath="{.spec.template.spec.containers[*].image}"="wil42/playground:v$newImageVersion" --timeout=600s
 if [ $? -eq 1 ]
@@ -122,7 +134,7 @@ echo "> curl http://localhost:$openPort"
 sleep 5 #This prevents the following command from failing for some reason
 #The last port-forward is linked to prior app. After synchronization we need to make a new port-forward. We use a new port because trying to keep port 8888 creates bugs even when killing prior port-forward.
 kubectl port-forward svc/will-app-service -n dev $openPort:8888 &>/dev/null &
-sleep 5 #This prevents the following command from failing for some reason
+sleep 10 #This prevents the following command from failing for some reason
 curl http://localhost:$openPort 2>/dev/null
 while [ $? != 0 ]; do #Sometimes bugs occur but relaunching resolves the problem
   echo "Call failed retrying..."

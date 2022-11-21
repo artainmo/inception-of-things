@@ -122,7 +122,7 @@ echo "> curl http://localhost:$openPort"
 sleep 5 #This prevents the following command from failing for some reason
 #The last port-forward is linked to prior app. After synchronization we need to make a new port-forward. We use a new port because trying to keep port 8888 creates bugs even when killing prior port-forward.
 kubectl port-forward svc/will-app-service -n dev $openPort:8888 &>/dev/null &
-sleep 5 #This prevents the following command from failing for some reason
+sleep 10 #This prevents the following command from failing for some reason
 curl http://localhost:$openPort 2>/dev/null
 while [ $? != 0 ]; do #Sometimes bugs occur but relaunching resolves the problem
   echo "Call failed retrying..."
