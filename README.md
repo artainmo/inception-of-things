@@ -8,4 +8,4 @@ Part two orchestrates containers with [docker](https://github.com/artainmo/DevOp
 Part three synchronizes [github repository](https://github.com/artainmo/inception-of-things/tree/master/p3/app) and kubernetes' running app with [argo-cd](https://github.com/artainmo/WebDevelopment/blob/main/other/kubernetes/README.md#argo-cd)'s automated sync.<br>
 The bonus part synchronizes [gitlab repository](https://gitlab.com/artainmo/inception-of-things/-/tree/master/app) and kubernetes' running app via [gitlab CI/CD pipeline](https://github.com/artainmo/WebDevelopment/tree/main/other/DevOps#gitlab-cicd-pipeline) and argo-cd's manual sync.<br>
 
-This project I initially made with aglorios in this [repository](https://github.com/Aglorios17/Inception_Of_Things_19), I re-uploaded it on my profile.
+This project I initially made with [aglorios](https://github.com/Aglorios17) in this [repository](https://github.com/Aglorios17/Inception_Of_Things_19), I re-uploaded it on my profile.
