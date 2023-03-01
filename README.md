@@ -1,6 +1,6 @@
 # inception-of-things
 
-42 school [subject](https://cdn.intra.42.fr/pdf/pdf/66725/en.subject.pdf)
+42 school [subject](https://cdn.intra.42.fr/pdf/pdf/66725/en.subject.pdf).
 
 This project consists of multiple parts.<br>
 Part one launches VMs with Vagrant.<br>
