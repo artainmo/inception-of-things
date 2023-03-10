@@ -1,5 +1,5 @@
 # Introduction
-This app launches a kubernetes cluster using [k3d](https://github.com/artainmo/DevOps/tree/main/kubernetes#k3d---launch-local-kubernetes-cluster) wherein [Argo-CD](https://github.com/artainmo/DevOps/tree/main/kubernetes#argo-cd) is used to synchronize the running kubernetes cluster with a [git repository](https://github.com/Aglorios17/Inception_Of_Things_19/tree/main/p3/app) containing kubernetes configuration files to run as an app inside the kubernetes cluster. This automates moving files from a development to production environment and is part of the [CI/CD pipeline](https://github.com/artainmo/DevOps#CICD-pipelines).
+This app launches a kubernetes cluster using [k3d](https://github.com/artainmo/DevOps/tree/main/kubernetes#k3d---launch-local-kubernetes-cluster) wherein [Argo-CD](https://github.com/artainmo/DevOps/tree/main/kubernetes#argo-cd) is used to synchronize the running kubernetes cluster with a [git repository](https://github.com/artainmo/inception-of-things/tree/main/p3/app) containing kubernetes configuration files to run as an app inside the kubernetes cluster. This automates moving files from a development to production environment and is part of the [CI/CD pipeline](https://github.com/artainmo/DevOps#CICD-pipelines).
 
 # Use
 ### Prerequisites
