@@ -1,19 +1,23 @@
 echo "\033[0;32m======== Install prerequisites ========\033[0m"
-#do not forget to run docker desktop on mac
-#install docker if docker does not exist or is outdated
-brew outdated --cask docker || brew install --cask docker
-#install kubernetes and its CLI
-brew outdated kubernetes-cli || brew install kubernetes-cli
-#install k3d
-brew outdated k3d || brew install k3d
-#install argo-cd's CLI
-brew outdated argocd || brew install argocd
+if [ "$(uname)" = "Darwin" ]; then
+	#do not forget to run docker desktop on mac
+	#install docker if docker does not exist or is outdated
+	brew outdated --cask docker || brew install --cask docker
+	#install kubernetes and its CLI
+	brew outdated kubectl || brew kubectl
+	#install k3d
+	brew outdated k3d || brew install k3d
+	#install argo-cd's CLI
+	brew outdated argocd || brew install argocd
+fi
 
 echo "\033[0;32m======== K3D setup - Create kubernetes cluster on local machine ========\033[0m"
 k3d cluster create p3
 if [ $? -eq 1 ]
 then
-	osascript -e 'display notification "Cluster creation failed" with title "App Error"'; say "App Error"
+	if [ "$(uname)" = "Darwin" ]; then
+		osascript -e 'display notification "Cluster creation failed" with title "App Error"'; say "App Error"
+	fi
   echo "An error occured when creating the cluster."
 	echo "The cluster probably already exists."
 	read -p 'Do you want us to delete and restart the cluster? (y/n): ' input
