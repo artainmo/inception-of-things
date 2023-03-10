@@ -1,5 +1,5 @@
 # Introduction
-Here we launch a similar app as in part [p3](https://github.com/Aglorios17/Inception_Of_Things_19/tree/main/p3), using [k3d](https://github.com/artainmo/DevOps/tree/main/kubernetes#k3d---launch-local-kubernetes-cluster) for generating a local kubernetes cluster and [Argo-CD](https://github.com/artainmo/DevOps/tree/main/kubernetes#argo-cd) for synchronization between repository and running app.<br>
+Here we launch a similar app as in part [p3](https://github.com/artainmo/inception-of-things/tree/main/p3), using [k3d](https://github.com/artainmo/DevOps/tree/main/kubernetes#k3d---launch-local-kubernetes-cluster) for generating a local kubernetes cluster and [Argo-CD](https://github.com/artainmo/DevOps/tree/main/kubernetes#argo-cd) for synchronization between repository and running app.<br>
 However here we do not setup Argo CD for 'automatic' synchronization. Instead we acquire automatic synchronization through the use of a [gitlab CI/CD pipeline](https://github.com/artainmo/DevOps/tree/main/gitlab#gitlab-cicd-pipeline) (we defined [here](https://gitlab.com/artainmo/inception-of-things/-/blob/master/.gitlab-ci.yml)) manually executing Argo-CD synchronization each time changes are made inside our [gitlab app repository](https://gitlab.com/artainmo/inception-of-things/-/tree/master/app) that we run inside the cluster.
 
 # Use
